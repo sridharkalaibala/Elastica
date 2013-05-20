@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Elastica.io]]></title>
+  <link href="http://ruflin.github.io/Elastica/atom.xml" rel="self"/>
+  <link href="http://ruflin.github.io/Elastica/"/>
+  <updated>2013-05-20T21:32:28+02:00</updated>
+  <id>http://ruflin.github.io/Elastica/</id>
+  <author>
+    <name><![CDATA[Nicolas Ruflin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+</feed>
