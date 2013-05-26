@@ -1,15 +1,55 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://ruflin.github.io/Elastica/blog/archives/</loc>
+        <loc>http://Elastica.io//404.html</loc>
+        <lastmod>2013-05-20T22:09:35+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//blog/archives/</loc>
         <lastmod>2013-05-20T21:26:27+02:00</lastmod>
     </url>
     <url>
-        <loc>http://ruflin.github.io/Elastica/</loc>
+        <loc>http://Elastica.io//blog/</loc>
+        <lastmod>2013-05-20T22:00:37+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//example/bool-query/</loc>
+        <lastmod>2013-05-20T22:15:19+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//examples/</loc>
+        <lastmod>2013-05-22T20:51:47+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//</loc>
+        <lastmod>2013-05-22T20:40:38+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//installation/</loc>
+        <lastmod>2013-05-20T22:31:13+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//release/v0.19.8.0/</loc>
+        <lastmod>2013-05-21T14:44:51+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//release/v0.20.5.0/</loc>
+        <lastmod>2013-05-20T22:24:31+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//releases/</loc>
+        <lastmod>2013-05-20T22:27:34+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//robots.txt</loc>
         <lastmod>2013-05-20T21:26:27+02:00</lastmod>
     </url>
     <url>
-        <loc>http://ruflin.github.io/Elastica/robots.txt</loc>
-        <lastmod>2013-05-20T21:26:27+02:00</lastmod>
+        <loc>http://Elastica.io//search-documents/</loc>
+        <lastmod>2013-05-20T22:31:50+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//storing-and-indexing-documents/</loc>
+        <lastmod>2013-05-20T22:32:26+02:00</lastmod>
     </url>
 </urlset>

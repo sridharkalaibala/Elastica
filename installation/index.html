@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>installation - Elastica.io</title>
+  <meta name="author" content="Nicolas Ruflin">
+
+  
+  <meta name="description" content="Installation May 20th, 2013 Required Download Composer Include in your project Connect to elasticsearch Running a single node Running a cluster &lt; &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Elastica.io//installation">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Elastica.io" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Elastica.io</a></h1>
+  
+    <h2>A PHP client for elasticsearch.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:Elastica.io/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/examples/">Examples</a></li>
+  <li><a href="/api/">Api</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article role="article">
+  
+  <header>
+    <h1 class="entry-title">Installation</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-20T22:30:00+02:00" pubdate data-updated="true">May 20<span>th</span>, 2013</time></p>
+  </header>
+  
+  <ul>
+    <li>
+        <a href="#section-required">Required</a>
+    </li>
+    <li>
+        <a href="#section-download">Download</a>
+    </li>
+    <li>
+        <a href="#section-composer">Composer</a>
+    </li>
+    <li>
+        <a href="#section-include">Include in your project</a>
+    </li>
+    <li>
+        <a href="#section-connect">Connect to elasticsearch</a>
+        <ul>
+            <li><a href="#section-connect-single">Running a single node</a></li>
+            <li><a href="#section-connect-cluster">Running a cluster</a></li>
+        </ul>
+    </li>
+</ul>
+
+
+<pre><code>&lt;h2 id="section-installation"&gt;Installation&lt;/h2&gt;
+    &lt;h3 id="section-required"&gt;Required&lt;/h3&gt;
+        &lt;p&gt;
+            Elastica v.0.20.5 require &lt;strong&gt;PHP 5.3 &gt;=&lt;/strong&gt;, for using Elastica on PHP 5.2 let see &lt;a href="https://github.com/ruflin/Elastica/tree/v0.19.8.0"&gt; Elastica v0.19.8&lt;/a&gt;
+        &lt;/p&gt;
+    &lt;h3 id="section-download"&gt;Download&lt;/h3&gt;
+        &lt;p&gt;
+            You can download this project in either &lt;a href="http://github.com/ruflin/Elastica/zipball/master"&gt;zip&lt;/a&gt; or &lt;a href="http://github.com/ruflin/Elastica/tarball/master"&gt;tar&lt;/a&gt; formats.
+        &lt;/p&gt;
+        &lt;p&gt;
+            The prefered way is to clone &lt;em&gt;Elastica&lt;/em&gt; with &lt;a href="http://git-scm.com"&gt;Git&lt;/a&gt; by running:
+            &lt;pre class="prettyprint"&gt;$ git clone git://github.com/ruflin/Elastica&lt;/pre&gt;
+        &lt;/p&gt;
+    &lt;h3 id="section-composer"&gt;Composer&lt;/h3&gt;
+        &lt;p&gt;
+            You can also install Elastica by using composer:
+            &lt;pre class="prettyprint"&gt;
+</code></pre>
+
+<p>{</p>
+
+<pre><code>"require": {
+    "ruflin/Elastica": "dev-master"
+}
+</code></pre>
+
+<p>}</p>
+
+<pre><code>            &lt;/pre&gt;
+        &lt;/p&gt;
+    &lt;h3 id="section-include"&gt;Include in your project&lt;/h3&gt;
+        &lt;p&gt;If you've used composer to install Elastica it's very easy. Assuming your document root index file is in
+            /htdocs/myproject/web/ and composer installed the vendor file in /htdocs/myproject/vendor your index.php
+            has to look like this:
+            &lt;pre class="prettyprint"&gt;
+</code></pre>
+
+<p>require_once &lsquo;../vendor/autoload.php&rsquo;;</p>
+
+<pre><code>            &lt;/pre&gt;
+        &lt;/p&gt;
+        &lt;p&gt;
+            If you don't use composer in your project you have to include Elastica. Best way to do this is to use PHP &lt;a href="http://php.net/manual/en/function.spl-autoload-register.php"&gt;spl_autoload_register&lt;/a&gt;. This function is automatically called in case you are trying to use a class/interface which hasn't been defined yet.
+        &lt;/p&gt;
+        &lt;p&gt;
+            So let's assume you installed Elastica to &lt;code&gt;/var/www/Elastica&lt;/code&gt;. When you make an instance of &lt;code&gt;\Elastica\Client&lt;/code&gt;, the function will check if there is a file with that class in &lt;code&gt;/var/www/Elastica/Client&lt;/code&gt; and load it.
+        &lt;p&gt;
+        &lt;pre class="prettyprint"&gt;
+</code></pre>
+
+<p>function __autoload_elastica ($class) {</p>
+
+<pre><code>$path = str_replace('\\', '/', substr($class, 1));
+
+if (file_exists('/var/www/' . $path . '.php')) {
+    require_once('/var/www/' . $path . '.php');
+}
+</code></pre>
+
+<p>}
+spl_autoload_register(&lsquo;__autoload_elastica&rsquo;);</p>
+
+<p>//Or using anonymous function PHP 5.3.0>=
+spl_autoload_register(function($class){</p>
+
+<p>   if (file_exists(&lsquo;/var/www/&rsquo; . $class . &lsquo;.php&rsquo;)) {</p>
+
+<pre><code>    require_once('/var/www/' . $class . '.php');
+}
+</code></pre>
+
+<p>});</p>
+
+<p></pre></p>
+
+<pre><code>        &lt;p&gt;
+            Now you are ready to use elasticsearch in your PHP project! Hurray!
+        &lt;/p&gt;
+    &lt;h3 id="section-connect"&gt;Connect to elasticsearch&lt;/h3&gt;
+            &lt;p&gt;
+                You need at least one instance, also called node, of elasticsearch running and be able to connect to it. Luckily it's easy and you can follow this guide to &lt;a href="http://www.elasticsearch.org/tutorials/2010/07/01/setting-up-elasticsearch.html"&gt;set up elasticsearch&lt;/a&gt;.
+            &lt;/p&gt;
+            &lt;p&gt;
+                To start an instance of your installed elasticsearch you just need to run the following command in the elasticsearch folder:
+            &lt;/p&gt;
+            &lt;pre&gt;$ ./bin/elasticsearch -f&lt;/pre&gt;
+            &lt;p&gt;If you are developing under windows just go to the bin folder and run&lt;/p&gt;
+            &lt;pre&gt;&gt; elasticsearch.bat&lt;/pre&gt;
+            &lt;p&gt;
+                &lt;strong&gt;You can start multiple nodes&lt;/strong&gt; by running the command multiple times. As you will see, the first node will be started on port 9200. If you start another node it will listen on port 9201 and so on. Elasticsearch automatically discovers the other nodes and creates a cluster.
+            &lt;/p&gt;
+            &lt;h4 id="section-connect-single"&gt;Running a single node&lt;/h4&gt;
+                &lt;p&gt;
+                    When your single elasticsearch node is running on &lt;code&gt;localhost:9200&lt;/code&gt;, which is the default, you can simply connect:
+                &lt;/p&gt;
+                &lt;pre class="prettyprint"&gt;$elasticaClient = new \Elastica\Client();&lt;/pre&gt;
+                &lt;p&gt;
+                    In case that your node is running on another server or a different port, you can pass these information as an array:
+                &lt;/p&gt;
+                &lt;pre class="prettyprint"&gt;
+</code></pre>
+
+<p>$elasticaClient = new \Elastica\Client(array(</p>
+
+<pre><code>'host' =&gt; 'mydomain.org',
+'port' =&gt; 12345
+</code></pre>
+
+<p>));</pre></p>
+
+<pre><code>            &lt;h4 id="section-connect-cluster"&gt;Running a cluster&lt;/h4&gt;
+                &lt;p&gt;
+                    Elasticsearch was built with the cloud / multiple distributed servers in mind. It is quite easy to start a elasticsearch cluster simply by starting multiple instances of elasticsearch on one server or on multiple servers. To start multiple instances of elasticsearch on your local machine, just run the command to start an instance in the elasticsearch folder twice.
+                &lt;/p&gt;
+                &lt;p&gt;
+                    One of the goals of the distributed search index is availability. If one server goes down, search results should still be served. But if the client connects to only the server that just went down, no results are returned anymore. Because of this, &lt;code&gt;\Elastica\Client&lt;/code&gt; supports multiple servers which are accessed in a round robin algorithm. This is the only and also most basic option at the moment. So if we start a node on port 9200 and port 9201 above, we pass the following arguments to &lt;code&gt;\Elastica\Client&lt;/code&gt; to access both servers:
+                &lt;/p&gt;
+                &lt;pre class="prettyprint"&gt;
+</code></pre>
+
+<p>$elasticaClient = new \Elastica\Client(array(</p>
+
+<pre><code>'servers' =&gt; array(
+    array('host' =&gt; 'localhost', 'port' =&gt; 9200)
+    array('host' =&gt; 'localhost', 'port' =&gt; 9201)
+)
+</code></pre>
+
+<p>));</pre></p>
+
+<pre><code>                &lt;p&gt;
+                    This client implementation also allows to distribute the load on multiple nodes. As far as I know, Elasticsearch already does this quite well on its own. But it helps if more than one node can answer http requests. Therefore, the method above is really useful if you use more than one elasticsearch node in a cluster to send your request to all servers.
+                &lt;/p&gt;
+</code></pre>
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-20T22:30:00+02:00" pubdate data-updated="true">May 20<span>th</span>, 2013</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://Elastica.io//installation/index.html" data-via="" data-counturl="http://Elastica.io//installation/index.html" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+    </footer>
+  
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Nicolas Ruflin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

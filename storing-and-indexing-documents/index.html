@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>storing-and-indexing-documents - Elastica.io</title>
+  <meta name="author" content="Nicolas Ruflin">
+
+  
+  <meta name="description" content="Storing-and-indexing-documents May 20th, 2013 Define Analysis Define Mapping Add documents &lt;h2 id="section-storing"&gt;Storing and indexing &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Elastica.io//storing-and-indexing-documents">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Elastica.io" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Elastica.io</a></h1>
+  
+    <h2>A PHP client for elasticsearch.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:Elastica.io/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/examples/">Examples</a></li>
+  <li><a href="/api/">Api</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article role="article">
+  
+  <header>
+    <h1 class="entry-title">Storing-and-indexing-documents</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-20T22:32:00+02:00" pubdate data-updated="true">May 20<span>th</span>, 2013</time></p>
+  </header>
+  
+  <ul>
+    <li>
+        <a href="#section-analysis">Define Analysis</a>
+    </li>
+    <li>
+        <a href="#section-mapping">Define Mapping</a>
+    </li>
+    <li>
+        <a href="#section-add">Add documents</a>
+    </li>
+</ul>
+
+
+<pre><code>&lt;h2 id="section-storing"&gt;Storing and indexing documents&lt;/h2&gt;
+    &lt;p&gt;
+        To add data to the index you can just drop some documents in and it will be indexed directly. But in most cases you want to specify how your data is indexed. There are a lot of possibilities in elasticsearch to do so. You can decide how each field is mapped and how your data is analyzed to provide the full text search.
+    &lt;/p&gt;
+    &lt;p&gt;
+        For more information and all the possibilities elasticsearch provides, take a look at the &lt;a href="http://www.elasticsearch.org/guide/reference/index-modules/analysis/"&gt;Analysis&lt;/a&gt; and the &lt;a href="http://www.elasticsearch.org/guide/reference/mapping/"&gt;Mapping&lt;/a&gt; reference.
+    &lt;/p&gt;
+    &lt;p&gt;
+        The documents in elasticsearch are organized in indexes. Each index contains one or more types which contains the documents. So to put our data in elasticsearch, we first have to define how the index and the type will look like.
+    &lt;/p&gt;
+    &lt;h3 id="section-analysis"&gt;Define Analysis&lt;/h3&gt;
+        &lt;p&gt;
+            In elasticsearch, when you create an index, you define the number of shards and number of replicas. A shard is a part of your data and a replica is like an backup of that data. So when you have one node, all the shards and all the replicas will be on that node. When you have more nodes, your data will be balanced to these nodes. How it is balanced depends on your configuration. More on this topic can be found &lt;a href="http://www.elasticsearch.org/videos/2010/02/08/es-distributed-diagram.html"&gt; here&lt;/a&gt;.
+
+        &lt;/p&gt;
+        &lt;p&gt;
+            Data in elasticsearch is analyzed at two different times. Once, when you index a document it's analyzed and this information is put in the index. The other time is when do a search. Elasticsearch analyzes the search query and looks up the gained information in the index. To see all possible analyzers and filter check out the &lt;a href="http://www.elasticsearch.org/guide/reference/index-modules/analysis/"&gt;Analysis&lt;/a&gt; reference.
+        &lt;/p&gt;
+        &lt;p&gt;
+            Let's create an index called twitter! We'll include two analyzers. Let's call them  &lt;code&gt;indexAnalyzer&lt;/code&gt; and &lt;code&gt;searchAnalyzer&lt;/code&gt;, but you can use any name. &lt;code&gt;indexAnalyzer&lt;/code&gt; defines how the data will be analyzed when it's indexed and &lt;code&gt;searchAnalyzer&lt;/code&gt; defines how elasticsearch will analyze the search query. We'll reference these when we create the Mapping below. In this example we'll also use a custom snowball filter for the data.
+        &lt;/p&gt;
+        &lt;p&gt;
+            The second argument of &lt;code&gt;\Elastica\Index&lt;/code&gt; is an OPTIONAL bool=&gt; (true) Deletes index first if already exists (default = false)
+        &lt;/p&gt;
+</code></pre>
+
+<pre class="prettyprint">
+// Load index
+$elasticaIndex = $elasticaClient->getIndex('twitter');
+
+// Create the index new
+$elasticaIndex->create(
+    array(
+        'number_of_shards' => 4,
+        'number_of_replicas' => 1,
+        'analysis' => array(
+            'analyzer' => array(
+                'indexAnalyzer' => array(
+                    'type' => 'custom',
+                    'tokenizer' => 'standard',
+                    'filter' => array('lowercase', 'mySnowball')
+                ),
+                'searchAnalyzer' => array(
+                    'type' => 'custom',
+                    'tokenizer' => 'standard',
+                    'filter' => array('standard', 'lowercase', 'mySnowball')
+                )
+            ),
+            'filter' => array(
+                'mySnowball' => array(
+                    'type' => 'snowball',
+                    'language' => 'German'
+                )
+            )
+        )
+    ),
+    true
+);</pre>
+
+
+<pre><code>    &lt;h3 id="section-mapping"&gt;Define Mapping&lt;/h3&gt;
+        &lt;p&gt;
+            The Mapping defines what kind of data is in which field. If no mapping is defined, elasticsearch will guess the kind of the data and map it automatically. To see all of the possibilities, check out the &lt;a href="http://www.elasticsearch.org/guide/reference/mapping/"&gt;Mapping&lt;/a&gt; reference.&lt;/p&gt;
+
+        &lt;p&gt;
+        If you aren't going to define a mapping, you should probably change the name of the analyzers we defined above to &lt;code&gt;default_index&lt;/code&gt; and &lt;code&gt;default_search&lt;/code&gt;. These will be used automatically when no analyzer is specified. An analyzer named &lt;code&gt;default&lt;/code&gt; can be used for both searching and indexing.
+        &lt;/p&gt;
+        &lt;p&gt;
+            In our example, we will create an type called tweet which is in our index twitter. So first we create that type and afterwards we define the mapping. Note that it is possible to boost data in elasticsearch. You can either boost a specific field or you can boost a complete document. To boost a document, we'll use the field &lt;code&gt;_boost&lt;/code&gt;. If we boost a field it's defined just like the kind of the field.
+        &lt;/p&gt;
+</code></pre>
+
+<pre class="prettyprint">
+//Create a type
+$elasticaType = $elasticaIndex->getType('tweet');
+
+// Define mapping
+$mapping = new \Elastica\Type\Mapping();
+$mapping->setType($elasticaType);
+$mapping->setParam('index_analyzer', 'indexAnalyzer');
+$mapping->setParam('search_analyzer', 'searchAnalyzer');
+
+// Define boost field
+$mapping->setParam('_boost', array('name' => '_boost', 'null_value' => 1.0));
+
+// Set mapping
+$mapping->setProperties(array(
+    'id'      => array('type' => 'integer', 'include_in_all' => FALSE),
+    'user'    => array(
+        'type' => 'object',
+        'properties' => array(
+            'name'      => array('type' => 'string', 'include_in_all' => TRUE),
+            'fullName'  => array('type' => 'string', 'include_in_all' => TRUE)
+        ),
+    ),
+    'msg'     => array('type' => 'string', 'include_in_all' => TRUE),
+    'tstamp'  => array('type' => 'date', 'include_in_all' => FALSE),
+    'location'=> array('type' => 'geo_point', 'include_in_all' => FALSE),
+    '_boost'  => array('type' => 'float', 'include_in_all' => FALSE)
+));
+
+// Send mapping to type
+$mapping->send();</pre>
+
+
+<pre><code>    &lt;h3 id="section-add"&gt;Add documents&lt;/h3&gt;
+        &lt;p&gt;
+            Now that we have our index ready for the data, we just need to go ahead an put some data in there!
+        &lt;/p&gt;
+        &lt;p&gt;
+            First we put together our document. In our example it's a tweet. This tweet is going to be a &lt;code&gt;\Elastica\Document&lt;/code&gt; which is then added to our type tweet in the index twitter.
+        &lt;/p&gt;
+</code></pre>
+
+<pre class="prettyprint">
+// The Id of the document
+$id = 1;
+
+// Create a document
+$tweet = array(
+    'id'      => $id,
+    'user'    => array(
+        'name'      => 'mewantcookie',
+        'fullName'  => 'Cookie Monster'
+    ),
+    'msg'     => 'Me wish there were expression for cookies like there is for apples. "A cookie a day make the doctor diagnose you with diabetes" not catchy.',
+    'tstamp'  => '1238081389',
+    'location'=> '41.12,-71.34',
+    '_boost'  => 1.0
+);
+// First parameter is the id of document.
+$tweetDocument = new \Elastica\Document($id, $tweet);
+
+// Add tweet to type
+$elasticaType->addDocument($tweetDocument);
+
+// Refresh Index
+$elasticaType->getIndex()->refresh();</pre>
+
+
+<pre><code>        &lt;p&gt;
+            Now the index contains a document. But that's not enough! Add more documents to the index, so a search makes sense!
+        &lt;/p&gt;
+&lt;h3 id="section-bulk"&gt;Bulk indexing&lt;/h3&gt;
+    &lt;p&gt;
+        Of course you can add one document after another. But what if you want to put the content of a large database this can be slow. It's better to create an array of documents and add them all at once:
+</code></pre>
+
+<pre class="prettyprint">
+$documents = array();
+while ( ... ) { // Fetching content from the database
+    $documents[] = new \Elastica\Document(
+        $id,
+        array(
+            ...
+        );
+    );
+}
+// \Elastica\Type::addDocuments(array \Elastica\Document);
+$elasticaType->addDocuments($tweetDocument);
+$elasticaType->getIndex()->refresh();
+</pre>
+
+
+<pre><code>        A good start are 500 documents per bulk operation. Depending on the size of your documents you've to play around a little how many documents are a good number for your application.
+    &lt;/p&gt;
+</code></pre>
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-20T22:32:00+02:00" pubdate data-updated="true">May 20<span>th</span>, 2013</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://Elastica.io//storing-and-indexing-documents/index.html" data-via="" data-counturl="http://Elastica.io//storing-and-indexing-documents/index.html" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+    </footer>
+  
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Nicolas Ruflin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>search-documents - Elastica.io</title>
+  <meta name="author" content="Nicolas Ruflin">
+
+  
+  <meta name="description" content="Search-documents May 20th, 2013 Search query Retrieve results Add filter Facets &lt;h2 id="section-search"&gt;Search documents&lt;/h2&gt; &lt;p&gt; &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Elastica.io//search-documents">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Elastica.io" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Elastica.io</a></h1>
+  
+    <h2>A PHP client for elasticsearch.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:Elastica.io/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/examples/">Examples</a></li>
+  <li><a href="/api/">Api</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article role="article">
+  
+  <header>
+    <h1 class="entry-title">Search-documents</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-20T22:31:00+02:00" pubdate data-updated="true">May 20<span>th</span>, 2013</time></p>
+  </header>
+  
+  <ul>
+    <li>
+        <a href="#section-query">Search query</a>
+    </li>
+    <li>
+        <a href="#section-retrieve">Retrieve results</a>
+    </li>
+    <li>
+        <a href="#section-filter">Add filter</a>
+    </li>
+    <li>
+        <a href="#section-facets">Facets</a>
+    </li>
+</ul>
+
+
+<pre><code>&lt;h2 id="section-search"&gt;Search documents&lt;/h2&gt;
+    &lt;p&gt;
+        With some documents in the index we can start searching. A basic search is executing a query against elasticsearch. The result of a query then can be filtered by defining some filters. Additionally you can retrieve facets to create a search navigation based on filters. For further information check out the &lt;a href="http://www.elasticsearch.org/guide/reference/query-dsl/"&gt;Query DSL&lt;/a&gt; and the &lt;a href="http://www.elasticsearch.org/guide/reference/api/search/facets/"&gt;Facets&lt;/a&gt; reference. In this example we don't use all possible options to keep it simple. Take a look in the &lt;a href="api/index.html"&gt;Elastica API&lt;/a&gt; for more options.
+    &lt;/p&gt;
+
+    &lt;h3 id="section-query"&gt;Search query&lt;/h3&gt;
+        &lt;p&gt;
+            A query retrieves a set of results matching a query. So if you search with a &lt;code&gt;match_all&lt;/code&gt; query you would get all the documents in that index or type, depending on where you search. The way elasticsearch finds the documents depends also on which analyzers you defined when creating the index.
+        &lt;/p&gt;
+        &lt;p&gt;
+            So how do you define a query in Elastica? Just create a Query object and give it some data. It's a simple as that.
+        &lt;/p&gt;
+</code></pre>
+
+<pre class="prettyprint">
+// Define a Query. We want a string query.
+$elasticaQueryString    = new Elastica\Query\QueryString();
+
+//'And' or 'Or' default : 'Or'
+$elasticaQueryString->setDefaultOperator('AND');
+$elasticaQueryString->setQuery('sesam street');
+
+// Create the actual search object with some data.
+$elasticaQuery      = new Elastica\Query();
+$elasticaQuery->setQuery($elasticaQueryString);
+
+//Search on the index.
+$elasticaResultSet  = $elasticaIndex->search($elasticaQuery);</pre>
+
+
+<pre><code>        &lt;p&gt;I know, at first it seems a bit complicated with the nesting of all the arrays. But it really isn't. The &lt;code&gt;$elasticaQuery&lt;/code&gt; contains all the information regarding our query. We will add filter and facets later. Your search can always consist of only one query but as-much-as-you-like filters and facets.&lt;/p&gt;
+        &lt;p&gt;If you want a pagination in your application you can use the following commands:
+</code></pre>
+
+<pre class="prettyprint">
+$elasticaQuery->setFrom(50);    // Where to start?
+$elasticaQuery->setLimit(25);   // How many?
+</pre>
+
+
+<pre><code>        &lt;/p&gt;
+
+    &lt;h3 id="section-retrieve"&gt;Retrieve results&lt;/h3&gt;
+        &lt;p&gt;In the &lt;code&gt;$elasticaResultSet&lt;/code&gt; all the resulting documents are stored. You can get them together with some statistics easily.&lt;/p&gt;
+</code></pre>
+
+<pre class="prettyprint">
+$elasticaResults    = $elasticaResultSet->getResults();
+$totalResults       = $elasticaResultSet->getTotalHits();
+
+foreach ($elasticaResults as $elasticaResult) {
+    var_dump($elasticaResult->getData());
+}</pre>
+
+
+<pre><code>    &lt;h3 id="section-filter"&gt;Add filter&lt;/h3&gt;
+        &lt;p&gt;
+            Adding and nesting filter can get a bit complex but I try to keep it simple. Filters are added to the search query object (&lt;code&gt;$elasticaQuery&lt;/code&gt;). Let's assume we already have a query searching for sesam street. We now can define some filters on the resulting data. So if we want to find all muppets that like cookies and are either blue or green, our filters would look something like that:
+        &lt;/p&gt;
+</code></pre>
+
+<pre class="prettyprint">
+// Filter for being of color blue
+$elasticaFilterColorBlue    = new \Elastica\Filter\Term();
+//search 'color' = 'blue'
+$elasticaFilterColorBlue->setTerm('color', 'blue');
+
+// Filter for being of color green
+$elasticaFilterColorGreen   = new \Elastica\Filter\Term();
+$elasticaFilterColorGreen->setTerm('color', 'green');
+
+
+<!--// Or can be write like that : 
+$elasticaFilterColorBlue->setTerm('color', array('blue','green')); -->
+
+// Filter for liking cookies
+$elasticaFilterLikesCookies = new \Elastica\Filter\Term();
+$elasticaFilterLikesCookies->setTerm('likes', 'cookies');
+
+
+// Filter 'or' for the color, adding the color filters
+$elasticaFilterOr   = new \Elastica\Filter\BoolOr();
+$elasticaFilterOr->addFilter($elasticaFilterColorBlue);
+$elasticaFilterOr->addFilter($elasticaFilterColorGreen);
+
+// Filter 'and' for the colors and likes
+$elasticaFilterAnd  = new \Elastica\Filter\BoolAnd();
+$elasticaFilterAnd->addFilter($elasticaFilterOr);
+$elasticaFilterAnd->addFilter($elasticaFilterLikesCookies);
+
+// Add filter to the search object.
+$elasticaQuery->setFilter($elasticaFilterAnd);</pre>
+
+
+<pre><code>        &lt;p&gt;
+            With the filters added, the search is ready to be executed. Probably this would return the cookie monster. But that depends on the data you added to your index, of course.
+        &lt;/p&gt;
+
+    &lt;h3 id="section-facets"&gt;Facets&lt;/h3&gt;
+        &lt;p&gt;
+            A facet returns some information on the data in your database, depending on your search query. So let's say there is a field &lt;code&gt;tag&lt;/code&gt; in our documents. In the results of our query we want to know, which tags are used by the results and how many documents have a certain tag. Read more in the &lt;a href="http://www.elasticsearch.org/guide/reference/api/search/facets/"&gt;facets API&lt;/a&gt;.
+        &lt;/p&gt;
+        &lt;p&gt;
+            Here is a quick example on how to define a facet for your query:
+        &lt;/p&gt;
+</code></pre>
+
+<pre class="prettyprint">
+// Define a new facet.
+$elasticaFacet  = new \Elastica\Facet\Terms('myFacetName');
+$elasticaFacet->setField('tags');
+$elasticaFacet->setSize(10);
+$elasticaFacet->setOrder('reverse_count');
+
+// Add that facet to the search query object.
+$elasticaQuery->addFacet($elasticaFacet);</pre>
+
+
+<pre><code>        &lt;p&gt;
+            This will return 10 tags together with a count of the documents in your current filtered search query. Retrieving the facets works similar to the retrieval of the documents.
+        &lt;/p&gt;
+</code></pre>
+
+<pre class="prettyprint">
+// Get facets from the result of the search query
+$elasticaFacets = $elasticaResultSet->getFacets();
+
+// Notice, that myFacetName is the same as above
+// when the facet was defined.
+foreach ($elasticaFacets['myFacetName']['terms'] as $elasticaFacet) {
+    var_dump($elasticaFacet);
+}</pre>
+
+
+<pre><code>        &lt;p&gt;A good use case is using the different types in your index as a facet. To get this you've to define the facet like this:
+</code></pre>
+
+<pre class="prettyprint">
+$elasticaFacet = new \Elastica\Facet\Terms('Facettes');
+    $elasticaFacet->setField('_type');
+}</pre>
+
+
+<pre><code>        &lt;/p&gt;
+</code></pre>
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-20T22:31:00+02:00" pubdate data-updated="true">May 20<span>th</span>, 2013</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://Elastica.io//search-documents/index.html" data-via="" data-counturl="http://Elastica.io//search-documents/index.html" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+    </footer>
+  
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Nicolas Ruflin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
