@@ -9,7 +9,10 @@
   <meta name="author" content="Nicolas Ruflin">
 
   
-  <meta name="description" content="Search-documents Search query Retrieve results Add filter Facets &lt;h2 id="section-search"&gt;Search documents&lt;/h2&gt; &lt;p&gt; With some &hellip;">
+  <meta name="description" content="Search-documents Search query
+Retrieve results
+Add filter
+Facets Search documents With some documents in the index we can start searching. A basic &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,166 +88,219 @@
   </header>
   
   <ul>
-    <li>
-        <a href="#section-query">Search query</a>
-    </li>
-    <li>
-        <a href="#section-retrieve">Retrieve results</a>
-    </li>
-    <li>
-        <a href="#section-filter">Add filter</a>
-    </li>
-    <li>
-        <a href="#section-facets">Facets</a>
-    </li>
+<li><a href="#section-query">Search query</a></li>
+<li><a href="#section-retrieve">Retrieve results</a></li>
+<li><a href="#section-filter">Add filter</a></li>
+<li><a href="#section-facets">Facets</a></li>
 </ul>
 
 
-<pre><code>&lt;h2 id="section-search"&gt;Search documents&lt;/h2&gt;
-    &lt;p&gt;
-        With some documents in the index we can start searching. A basic search is executing a query against elasticsearch. The result of a query then can be filtered by defining some filters. Additionally you can retrieve facets to create a search navigation based on filters. For further information check out the &lt;a href="http://www.elasticsearch.org/guide/reference/query-dsl/"&gt;Query DSL&lt;/a&gt; and the &lt;a href="http://www.elasticsearch.org/guide/reference/api/search/facets/"&gt;Facets&lt;/a&gt; reference. In this example we don't use all possible options to keep it simple. Take a look in the &lt;a href="api/index.html"&gt;Elastica API&lt;/a&gt; for more options.
-    &lt;/p&gt;
-
-    &lt;h3 id="section-query"&gt;Search query&lt;/h3&gt;
-        &lt;p&gt;
-            A query retrieves a set of results matching a query. So if you search with a &lt;code&gt;match_all&lt;/code&gt; query you would get all the documents in that index or type, depending on where you search. The way elasticsearch finds the documents depends also on which analyzers you defined when creating the index.
-        &lt;/p&gt;
-        &lt;p&gt;
-            So how do you define a query in Elastica? Just create a Query object and give it some data. It's a simple as that.
-        &lt;/p&gt;
-</code></pre>
-
-<pre class="prettyprint">
-// Define a Query. We want a string query.
-$elasticaQueryString    = new Elastica\Query\QueryString();
-
-//'And' or 'Or' default : 'Or'
-$elasticaQueryString->setDefaultOperator('AND');
-$elasticaQueryString->setQuery('sesam street');
-
-// Create the actual search object with some data.
-$elasticaQuery      = new Elastica\Query();
-$elasticaQuery->setQuery($elasticaQueryString);
-
-//Search on the index.
-$elasticaResultSet  = $elasticaIndex->search($elasticaQuery);</pre>
+<h2 id="section-search">Search documents</h2>
 
 
-<pre><code>        &lt;p&gt;I know, at first it seems a bit complicated with the nesting of all the arrays. But it really isn't. The &lt;code&gt;$elasticaQuery&lt;/code&gt; contains all the information regarding our query. We will add filter and facets later. Your search can always consist of only one query but as-much-as-you-like filters and facets.&lt;/p&gt;
-        &lt;p&gt;If you want a pagination in your application you can use the following commands:
-</code></pre>
+<p>With some documents in the index we can start searching. A basic search is executing a query against elasticsearch. The result of a query then can be filtered by defining some filters. Additionally you can retrieve facets to create a search navigation based on filters. For further information check out the <a href="http://www.elasticsearch.org/guide/reference/query-dsl/">Query DSL</a> and the <a href="http://www.elasticsearch.org/guide/reference/api/search/facets/">Facets</a> reference. In this example we don&rsquo;t use all possible options to keep it simple. Take a look in the <a href="api/index.html">Elastica API</a> for more options.</p>
 
-<pre class="prettyprint">
-$elasticaQuery->setFrom(50);    // Where to start?
-$elasticaQuery->setLimit(25);   // How many?
-</pre>
+<h3 id="section-query">Search query</h3>
 
 
-<pre><code>        &lt;/p&gt;
+<p>A query retrieves a set of results matching a query. So if you search with a <code>match_all</code> query you would get all the documents in that index or type, depending on where you search. The way elasticsearch finds the documents depends also on which analyzers you defined when creating the index.</p>
 
-    &lt;h3 id="section-retrieve"&gt;Retrieve results&lt;/h3&gt;
-        &lt;p&gt;In the &lt;code&gt;$elasticaResultSet&lt;/code&gt; all the resulting documents are stored. You can get them together with some statistics easily.&lt;/p&gt;
-</code></pre>
+<p>So how do you define a query in Elastica? Just create a Query object and give it some data. It&rsquo;s a simple as that.</p>
 
-<pre class="prettyprint">
-$elasticaResults    = $elasticaResultSet->getResults();
-$totalResults       = $elasticaResultSet->getTotalHits();
-
-foreach ($elasticaResults as $elasticaResult) {
-    var_dump($elasticaResult->getData());
-}</pre>
-
-
-<pre><code>    &lt;h3 id="section-filter"&gt;Add filter&lt;/h3&gt;
-        &lt;p&gt;
-            Adding and nesting filter can get a bit complex but I try to keep it simple. Filters are added to the search query object (&lt;code&gt;$elasticaQuery&lt;/code&gt;). Let's assume we already have a query searching for sesam street. We now can define some filters on the resulting data. So if we want to find all muppets that like cookies and are either blue or green, our filters would look something like that:
-        &lt;/p&gt;
-</code></pre>
-
-<pre class="prettyprint">
-// Filter for being of color blue
-$elasticaFilterColorBlue    = new \Elastica\Filter\Term();
-//search 'color' = 'blue'
-$elasticaFilterColorBlue->setTerm('color', 'blue');
-
-// Filter for being of color green
-$elasticaFilterColorGreen   = new \Elastica\Filter\Term();
-$elasticaFilterColorGreen->setTerm('color', 'green');
-
-
-<!--// Or can be write like that : 
-$elasticaFilterColorBlue->setTerm('color', array('blue','green')); -->
-
-// Filter for liking cookies
-$elasticaFilterLikesCookies = new \Elastica\Filter\Term();
-$elasticaFilterLikesCookies->setTerm('likes', 'cookies');
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="c1">// Define a Query. We want a string query.</span>
+</span><span class='line'><span class="nv">$elasticaQueryString</span>  <span class="o">=</span> <span class="k">new</span> <span class="nx">Elastica\Query\QueryString</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//&#39;And&#39; or &#39;Or&#39; default : &#39;Or&#39;</span>
+</span><span class='line'><span class="nv">$elasticaQueryString</span><span class="o">-&gt;</span><span class="na">setDefaultOperator</span><span class="p">(</span><span class="s1">&#39;AND&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$elasticaQueryString</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="s1">&#39;sesam street&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Create the actual search object with some data.</span>
+</span><span class='line'><span class="nv">$elasticaQuery</span>        <span class="o">=</span> <span class="k">new</span> <span class="nx">Elastica\Query</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$elasticaQuery</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="nv">$elasticaQueryString</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//Search on the index.</span>
+</span><span class='line'><span class="nv">$elasticaResultSet</span>    <span class="o">=</span> <span class="nv">$elasticaIndex</span><span class="o">-&gt;</span><span class="na">search</span><span class="p">(</span><span class="nv">$elasticaQuery</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-// Filter 'or' for the color, adding the color filters
-$elasticaFilterOr   = new \Elastica\Filter\BoolOr();
-$elasticaFilterOr->addFilter($elasticaFilterColorBlue);
-$elasticaFilterOr->addFilter($elasticaFilterColorGreen);
+<p>I know, at first it seems a bit complicated with the nesting of all the arrays. But it really isn&rsquo;t. The <code>$elasticaQuery</code> contains all the information regarding our query. We will add filter and facets later. Your search can always consist of only one query but as-much-as-you-like filters and facets.</p></p>
 
-// Filter 'and' for the colors and likes
-$elasticaFilterAnd  = new \Elastica\Filter\BoolAnd();
-$elasticaFilterAnd->addFilter($elasticaFilterOr);
-$elasticaFilterAnd->addFilter($elasticaFilterLikesCookies);
+<p>If you want a pagination in your application you can use the following commands:</p>
 
-// Add filter to the search object.
-$elasticaQuery->setFilter($elasticaFilterAnd);</pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$elasticaQuery</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>    <span class="c1">// Where to start?</span>
+</span><span class='line'><span class="nv">$elasticaQuery</span><span class="o">-&gt;</span><span class="na">setLimit</span><span class="p">(</span><span class="mi">25</span><span class="p">);</span>   <span class="c1">// How many?</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>        &lt;p&gt;
-            With the filters added, the search is ready to be executed. Probably this would return the cookie monster. But that depends on the data you added to your index, of course.
-        &lt;/p&gt;
-
-    &lt;h3 id="section-facets"&gt;Facets&lt;/h3&gt;
-        &lt;p&gt;
-            A facet returns some information on the data in your database, depending on your search query. So let's say there is a field &lt;code&gt;tag&lt;/code&gt; in our documents. In the results of our query we want to know, which tags are used by the results and how many documents have a certain tag. Read more in the &lt;a href="http://www.elasticsearch.org/guide/reference/api/search/facets/"&gt;facets API&lt;/a&gt;.
-        &lt;/p&gt;
-        &lt;p&gt;
-            Here is a quick example on how to define a facet for your query:
-        &lt;/p&gt;
-</code></pre>
-
-<pre class="prettyprint">
-// Define a new facet.
-$elasticaFacet  = new \Elastica\Facet\Terms('myFacetName');
-$elasticaFacet->setField('tags');
-$elasticaFacet->setSize(10);
-$elasticaFacet->setOrder('reverse_count');
-
-// Add that facet to the search query object.
-$elasticaQuery->addFacet($elasticaFacet);</pre>
 
 
-<pre><code>        &lt;p&gt;
-            This will return 10 tags together with a count of the documents in your current filtered search query. Retrieving the facets works similar to the retrieval of the documents.
-        &lt;/p&gt;
-</code></pre>
-
-<pre class="prettyprint">
-// Get facets from the result of the search query
-$elasticaFacets = $elasticaResultSet->getFacets();
-
-// Notice, that myFacetName is the same as above
-// when the facet was defined.
-foreach ($elasticaFacets['myFacetName']['terms'] as $elasticaFacet) {
-    var_dump($elasticaFacet);
-}</pre>
+<h3 id="section-retrieve">Retrieve results</h3>
 
 
-<pre><code>        &lt;p&gt;A good use case is using the different types in your index as a facet. To get this you've to define the facet like this:
-</code></pre>
+<p>In the <code>$elasticaResultSet</code> all the resulting documents are stored. You can get them together with some statistics easily.</p>
 
-<pre class="prettyprint">
-$elasticaFacet = new \Elastica\Facet\Terms('Facettes');
-    $elasticaFacet->setField('_type');
-}</pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$elasticaResults</span>  <span class="o">=</span> <span class="nv">$elasticaResultSet</span><span class="o">-&gt;</span><span class="na">getResults</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$totalResults</span>         <span class="o">=</span> <span class="nv">$elasticaResultSet</span><span class="o">-&gt;</span><span class="na">getTotalHits</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">foreach</span> <span class="p">(</span><span class="nv">$elasticaResults</span> <span class="k">as</span> <span class="nv">$elasticaResult</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$elasticaResult</span><span class="o">-&gt;</span><span class="na">getData</span><span class="p">());</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>        &lt;/p&gt;
-</code></pre>
+
+
+<h3 id="section-filter">Add filter</h3>
+
+
+<p>Adding and nesting filter can get a bit complex but I try to keep it simple. Filters are added to the search query object (<code>$elasticaQuery</code>). Let&rsquo;s assume we already have a query searching for sesam street. We now can define some filters on the resulting data. So if we want to find all muppets that like cookies and are either blue or green, our filters would look something like that:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="c1">// Filter for being of color blue</span>
+</span><span class='line'><span class="nv">$elasticaFilterColorBlue</span>  <span class="o">=</span> <span class="k">new</span> <span class="nx">\Elastica\Filter\Term</span><span class="p">();</span>
+</span><span class='line'><span class="c1">//search &#39;color&#39; = &#39;blue&#39;</span>
+</span><span class='line'><span class="nv">$elasticaFilterColorBlue</span><span class="o">-&gt;</span><span class="na">setTerm</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Filter for being of color green</span>
+</span><span class='line'><span class="nv">$elasticaFilterColorGreen</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Elastica\Filter\Term</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$elasticaFilterColorGreen</span><span class="o">-&gt;</span><span class="na">setTerm</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;!--//</span> <span class="k">Or</span> <span class="nx">can</span> <span class="nx">be</span> <span class="nx">write</span> <span class="nx">like</span> <span class="nx">that</span> <span class="o">:</span>
+</span><span class='line'><span class="nv">$elasticaFilterColorBlue</span><span class="o">-&gt;</span><span class="na">setTerm</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span><span class="s1">&#39;green&#39;</span><span class="p">));</span> <span class="o">--&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Filter for liking cookies</span>
+</span><span class='line'><span class="nv">$elasticaFilterLikesCookies</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">\Elastica\Filter\Term</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$elasticaFilterLikesCookies</span><span class="o">-&gt;</span><span class="na">setTerm</span><span class="p">(</span><span class="s1">&#39;likes&#39;</span><span class="p">,</span> <span class="s1">&#39;cookies&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Filter &#39;or&#39; for the color, adding the color filters</span>
+</span><span class='line'><span class="nv">$elasticaFilterOr</span>     <span class="o">=</span> <span class="k">new</span> <span class="nx">\Elastica\Filter\BoolOr</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$elasticaFilterOr</span><span class="o">-&gt;</span><span class="na">addFilter</span><span class="p">(</span><span class="nv">$elasticaFilterColorBlue</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$elasticaFilterOr</span><span class="o">-&gt;</span><span class="na">addFilter</span><span class="p">(</span><span class="nv">$elasticaFilterColorGreen</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Filter &#39;and&#39; for the colors and likes</span>
+</span><span class='line'><span class="nv">$elasticaFilterAnd</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">\Elastica\Filter\BoolAnd</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$elasticaFilterAnd</span><span class="o">-&gt;</span><span class="na">addFilter</span><span class="p">(</span><span class="nv">$elasticaFilterOr</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$elasticaFilterAnd</span><span class="o">-&gt;</span><span class="na">addFilter</span><span class="p">(</span><span class="nv">$elasticaFilterLikesCookies</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Add filter to the search object.</span>
+</span><span class='line'><span class="nv">$elasticaQuery</span><span class="o">-&gt;</span><span class="na">setFilter</span><span class="p">(</span><span class="nv">$elasticaFilterAnd</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With the filters added, the search is ready to be executed. Probably this would return the cookie monster. But that depends on the data you added to your index, of course.</p>
+
+<h3 id="section-facets">Facets</h3>
+
+
+<p>
+A facet returns some information on the data in your database, depending on your search query. So let&#8217;s say there is a field <code>tag</code> in our documents. In the results of our query we want to know, which tags are used by the results and how many documents have a certain tag. Read more in the <a href="http://www.elasticsearch.org/guide/reference/api/search/facets/">facets API</a>.
+</p>
+
+
+<p>Here is a quick example on how to define a facet for your query:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="c1">// Define a new facet.</span>
+</span><span class='line'><span class="nv">$elasticaFacet</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">\Elastica\Facet\Terms</span><span class="p">(</span><span class="s1">&#39;myFacetName&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$elasticaFacet</span><span class="o">-&gt;</span><span class="na">setField</span><span class="p">(</span><span class="s1">&#39;tags&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$elasticaFacet</span><span class="o">-&gt;</span><span class="na">setSize</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$elasticaFacet</span><span class="o">-&gt;</span><span class="na">setOrder</span><span class="p">(</span><span class="s1">&#39;reverse_count&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Add that facet to the search query object.</span>
+</span><span class='line'><span class="nv">$elasticaQuery</span><span class="o">-&gt;</span><span class="na">addFacet</span><span class="p">(</span><span class="nv">$elasticaFacet</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will return 10 tags together with a count of the documents in your current filtered search query. Retrieving the facets works similar to the retrieval of the documents.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="c1">// Get facets from the result of the search query</span>
+</span><span class='line'><span class="nv">$elasticaFacets</span> <span class="o">=</span> <span class="nv">$elasticaResultSet</span><span class="o">-&gt;</span><span class="na">getFacets</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Notice, that myFacetName is the same as above</span>
+</span><span class='line'><span class="c1">// when the facet was defined.</span>
+</span><span class='line'><span class="k">foreach</span> <span class="p">(</span><span class="nv">$elasticaFacets</span><span class="p">[</span><span class="s1">&#39;myFacetName&#39;</span><span class="p">][</span><span class="s1">&#39;terms&#39;</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$elasticaFacet</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$elasticaFacet</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A good use case is using the different types in your index as a facet. To get this you&rsquo;ve to define the facet like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$elasticaFacet</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Elastica\Facet\Terms</span><span class="p">(</span><span class="s1">&#39;Facettes&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$elasticaFacet</span><span class="o">-&gt;</span><span class="na">setField</span><span class="p">(</span><span class="s1">&#39;_type&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
   
     <footer>
