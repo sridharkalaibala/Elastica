@@ -14,7 +14,7 @@ Download
 Composer
 Include in your project
 Connect to elasticsearch Running a single node
-Running a cluster Installation &hellip;">
+Running a cluster Requirements &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -98,23 +98,18 @@ Running a cluster Installation &hellip;">
 <li><a href="#section-connect">Connect to elasticsearch</a>
 
 <ul>
-<li><a href="#section-connect-single">Running a single node</a></li></li>
-<li><a href="#section-connect-cluster">Running a cluster</a></li></li>
+<li><a href="#section-connect-single">Running a single node</a></li>
+<li><a href="#section-connect-cluster">Running a cluster</a></li>
 </ul>
 </li>
 </ul>
 
 
-<h2 id="section-installation">Installation</h2>
-
-
-<h3 id="section-required">Required</h3>
-
+<h1>Requirements</h1>
 
 <p>Elastica v.0.20.5 require <strong>PHP 5.3 >=</strong>, for using Elastica on PHP 5.2 let see <a href="https://github.com/ruflin/Elastica/tree/v0.19.8.0"> Elastica v0.19.8</a></p>
 
-<h3 id="section-download">Download</h3>
-
+<h1>Download</h1>
 
 <p>You can download this project in either <a href="http://github.com/ruflin/Elastica/zipball/master">zip</a> or <a href="http://github.com/ruflin/Elastica/tarball/master">tar</a> formats.</p>
 
@@ -124,10 +119,7 @@ Running a cluster Installation &hellip;">
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone git://github.com/ruflin/Elastica</span></code></pre></td></tr></table></div></figure>
 
 
-
-
-<h3 id="section-composer">Composer</h3>
-
+<h1>Composer</h1>
 
 <p>You can also install Elastica by using composer:</p>
 
@@ -143,10 +135,7 @@ Running a cluster Installation &hellip;">
 </span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
-
-
-<h3 id="section-include">Include in your project</h3>
-
+<h1>Include in your project</h1>
 
 <p>If you&rsquo;ve used composer to install Elastica it&rsquo;s very easy. Assuming your document root index file is in
 /htdocs/myproject/web/ and composer installed the vendor file in /htdocs/myproject/vendor your index.php
@@ -200,8 +189,7 @@ has to look like this:</p>
 
 <p>Now you are ready to use elasticsearch in your PHP project! Hurray!</p>
 
-<h3 id="section-connect">Connect to elasticsearch</h3>
-
+<h1>Connect to elasticsearch</h1>
 
 <p>You need at least one instance, also called node, of elasticsearch running and be able to connect to it. Luckily it&rsquo;s easy and you can follow this guide to <a href="http://www.elasticsearch.org/tutorials/2010/07/01/setting-up-elasticsearch.html">set up elasticsearch</a>.</p>
 
@@ -212,14 +200,12 @@ has to look like this:</p>
 
 <p>If you are developing under windows just go to the bin folder and run</p>
 
-
 <pre>> elasticsearch.bat</pre>
 
 
 <p><strong>You can start multiple nodes</strong> by running the command multiple times. As you will see, the first node will be started on port 9200. If you start another node it will listen on port 9201 and so on. Elasticsearch automatically discovers the other nodes and creates a cluster.</p>
 
-<h4 id="section-connect-single">Running a single node</h4>
-
+<h2>Running a single node</h2>
 
 <p>When your single elasticsearch node is running on <code>localhost:9200</code>, which is the default, you can simply connect:</p>
 
@@ -241,8 +227,7 @@ has to look like this:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h4 id="section-connect-cluster">Running a cluster</h4>
-
+<h2>Running a cluster</h2>
 
 <p>Elasticsearch was built with the cloud / multiple distributed servers in mind. It is quite easy to start a elasticsearch cluster simply by starting multiple instances of elasticsearch on one server or on multiple servers. To start multiple instances of elasticsearch on your local machine, just run the command to start an instance in the elasticsearch folder twice.</p>
 
