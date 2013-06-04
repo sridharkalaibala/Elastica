@@ -26,7 +26,7 @@
     </url>
     <url>
         <loc>http://Elastica.io//getting-started/installation.html</loc>
-        <lastmod>2013-05-29T23:13:59+02:00</lastmod>
+        <lastmod>2013-05-29T23:20:40+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//getting-started/logging.html</loc>
@@ -43,6 +43,10 @@
     <url>
         <loc>http://Elastica.io//</loc>
         <lastmod>2013-05-29T23:09:08+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//projects/</loc>
+        <lastmod>2013-06-04T08:03:56+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//release/v0.19.8.0/</loc>
