@@ -2,67 +2,75 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://Elastica.io//2012/08/12/release-v0-dot-19-dot-8-0/</loc>
-        <lastmod>2013-06-07T21:26:29+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//2013/02/20/release-v0-dot-20-dot-5-0/</loc>
-        <lastmod>2013-06-07T21:45:57+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//2013/06/07/release-v0-dot-90-dot-1-0/</loc>
-        <lastmod>2013-06-07T21:44:13+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//404.html</loc>
-        <lastmod>2013-05-29T22:49:21+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//blog/archives/</loc>
-        <lastmod>2013-06-07T21:45:57+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//blog/</loc>
-        <lastmod>2013-06-07T21:45:57+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//example/query/bool.html</loc>
-        <lastmod>2013-05-29T22:49:21+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//examples/</loc>
-        <lastmod>2013-07-06T20:01:39+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//getting-started/</loc>
-        <lastmod>2013-05-29T22:49:21+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//getting-started/installation.html</loc>
-        <lastmod>2013-05-29T23:20:40+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//getting-started/logging.html</loc>
-        <lastmod>2013-05-29T22:49:21+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//getting-started/search-documents.html</loc>
-        <lastmod>2013-05-29T22:49:21+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//getting-started/storing-and-indexing-documents.html</loc>
-        <lastmod>2013-05-29T22:49:21+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//</loc>
-        <lastmod>2013-06-07T21:39:38+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:59+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//migration/0.90.2/upsert.html</loc>
+        <lastmod>2013-07-07T15:21:59+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//migrations/</loc>
+        <lastmod>2013-07-07T15:21:59+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//projects/</loc>
-        <lastmod>2013-06-04T13:37:52+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//releases/</loc>
-        <lastmod>2013-06-07T21:27:34+02:00</lastmod>
+        <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//robots.txt</loc>
