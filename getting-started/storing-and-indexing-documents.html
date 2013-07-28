@@ -332,7 +332,8 @@ Add documents Storing and indexing documents To add data to the index you can ju
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$documents</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="c1">// Create holder for Elastica documents</span>
+</span><span class='line'><span class="nv">$documents</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
 </span><span class='line'><span class="k">while</span> <span class="p">(</span> <span class="o">...</span> <span class="p">)</span> <span class="p">{</span> <span class="c1">// Fetching content from the database</span>
 </span><span class='line'>    <span class="nv">$documents</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Elastica\Document</span><span class="p">(</span>
 </span><span class='line'>        <span class="nv">$id</span><span class="p">,</span>
@@ -341,8 +342,7 @@ Add documents Storing and indexing documents To add data to the index you can ju
 </span><span class='line'>        <span class="p">);</span>
 </span><span class='line'>    <span class="p">);</span>
 </span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="c1">// \Elastica\Type::addDocuments(array \Elastica\Document);</span>
-</span><span class='line'><span class="nv">$elasticaType</span><span class="o">-&gt;</span><span class="na">addDocuments</span><span class="p">(</span><span class="nv">$tweetDocument</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$elasticaType</span><span class="o">-&gt;</span><span class="na">addDocuments</span><span class="p">(</span><span class="nv">$documents</span><span class="p">);</span>
 </span><span class='line'><span class="nv">$elasticaType</span><span class="o">-&gt;</span><span class="na">getIndex</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">refresh</span><span class="p">();</span>
 </span></code></pre></td></tr></table></div></figure>
 
