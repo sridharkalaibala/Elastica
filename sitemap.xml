@@ -25,6 +25,14 @@
         <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
     <url>
+        <loc>http://Elastica.io//contribute/</loc>
+        <lastmod>2013-08-01T21:35:57+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://Elastica.io//contribute/pull-request.html</loc>
+        <lastmod>2013-08-01T21:32:19+02:00</lastmod>
+    </url>
+    <url>
         <loc>http://Elastica.io//example/query/bool.html</loc>
         <lastmod>2013-07-07T15:21:02+02:00</lastmod>
     </url>
@@ -54,7 +62,7 @@
     </url>
     <url>
         <loc>http://Elastica.io//</loc>
-        <lastmod>2013-07-07T15:21:59+02:00</lastmod>
+        <lastmod>2013-08-01T21:16:45+02:00</lastmod>
     </url>
     <url>
         <loc>http://Elastica.io//migration/0.90.2/upsert.html</loc>
