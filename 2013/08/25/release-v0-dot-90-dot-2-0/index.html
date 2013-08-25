@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>How to contribute - Elastica.io</title>
+  <title>Release v0.90.2.0 - Elastica.io</title>
   <meta name="author" content="Nicolas Ruflin">
 
   
-  <meta name="description" content="How to Contribute Elastica always needs people who contribute to Elastica. There are different fields where contributions are welcome: Documentation &hellip;">
+  <meta name="description" content="This release is compatible with elasticsearch 0.90.2. The only BC break in this release is that now Scripts is a frist class citizens in upsert. The &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Elastica.io//contribute">
+  <link rel="canonical" href="http://Elastica.io//2013/08/25/release-v0-dot-90-dot-2-0">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Elastica.io" type="application/atom+xml">
@@ -81,79 +81,104 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">How to Contribute</h1>
+    
+      <h1 class="entry-title">Release v0.90.2.0</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-25T10:47:00+02:00" pubdate data-updated="true">Aug 25<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <p>Elastica always needs people who contribute to Elastica. There are different fields where contributions are welcome:</p>
+
+
+<div class="entry-content"><p>This release is compatible with <a href="http://www.elasticsearch.org/downloads/0-90-2/">elasticsearch 0.90.2</a>. The only BC break in this release is that now Scripts is a frist class citizens in upsert. The migration guide can be found <a href="/migration/0.90.2/upsert.html">here</a>.</p>
+
+<p><a href="https://github.com/ruflin/Elastica/tree/v0.90.2.0">Download</a></p>
+
+<h2>Release Notes (changes.txt)</h2>
 
 <ul>
-<li>Documentation</li>
-<li>Fixing open issues</li>
-<li>Review pull requests</li>
-<li>Add new features</li>
-<li>Talk about Elastica</li>
-<li>Design</li>
-<li>Everything else related to Elastica</li>
+<li>Support for &ldquo;proxy&rdquo; param for http connections</li>
+<li>Add support for fields parameter in Elastica_Type::getDocument()</li>
+<li>Add a getQuery method on the FilteredQuery object</li>
+<li>Second param to \Elastica\Search.php:count($query = &lsquo;&rsquo;, $fullResult = false) added. If second param is set to true, full ResultSet is returned including facets.</li>
+<li>Plugin geocluster-facet support added</li>
+<li>Add Query\Common</li>
+<li>Can now create a query by passing an array to Type::search()</li>
+<li>Add Filter\GeohashCell</li>
+<li>Revamped upsert so that Scripts are now first class citizens. (BC break)
+See <a href="http://elastica.io/migration/0.90.2/upsert.html">http://elastica.io/migration/0.90.2/upsert.html</a></li>
+<li>Implemented doc_as_upsert.</li>
+<li>Update to elasticsearch 0.90.2</li>
+<li>Enabled ES_WAIT_ON_MAPPING_CHANGE for travis builds</li>
+<li>Added upsert support when updating a document with a partial document or a script.</li>
+<li>Add filtered queries to the percolator API.</li>
+<li>Correct class name for TermTest unit test</li>
+<li>Implement terms lookup feature for terms filter</li>
+<li>Fix support for making scroll queries once the scroll has been started.</li>
 </ul>
 
-
-<h2>Documentation</h2>
-
-<p>To make Elastica more friendly for new starters and also experience Elastica users, the documentation has to be extended. Be it the API documentation directly in the code or documentation on Elastica.io. To contribute to Elastica.io, you have to the following steps:</p>
-
-<ul>
-<li>Fork the <a href="https://github.com/ruflin/Elastica.io">Elastica.io</a> repository</li>
-<li>Get Elastica.io <a href="http://octopress.org/docs/blogging/">locally running</a></li>
-<li>Create and update the pages as needed</li>
-<li>Open a pull request on Elastica.io</li>
-</ul>
+</div>
 
 
-<p>If you only want to edit a small part of a page, Github also allows to edit files directly online.</p>
+  <footer>
+    <p class="meta">
+      
+  
 
-<h2>Fixing open issues</h2>
+<span class="byline author vcard">Posted by <span class="fn">Nicolas Ruflin</span></span>
 
-<p>There are always lots of <a href="https://github.com/ruflin/Elastica/issues?state=open">open issues</a> which are waiting to get fixed or implemented. In case one of the issues is for you, please pick it up, fork the project, fix it and open a pull request (<a href="/contribute/pull-request.html">guidelines</a>)</p>
+      
 
-<h2>Review pull requests</h2>
 
-<p>There are always <a href="https://github.com/ruflin/Elastica/pulls">open pull requests</a> which need reviewing, contributions, inputs and comments.</p>
 
-<h2>Add new features</h2>
 
-<p>Elasticsearch is under heavy development which means Elastica also has to evolve very fast. Not all features of elasticsearch are already supported in Elastica. To add new features, fork the project on Github, add your changes and open a pull request (<a href="/contribute/pull-request.html">guidelines</a>). To make sure no one else is already working on the same feature, <a href="https://github.com/ruflin/Elastica/issues?state=open">open a an issue</a> for it.</p>
 
-<h2>Talk about Elastica</h2>
 
-<p>Do you use Elastica in your project present it at a conference or meetup? You are going to talk about Elastica? That sounds awesome. Please let us also know so we can link to your presentation.</p>
 
-<h2>Design</h2>
-
-<p>We would love to have a nice design for our documentation or a logo for Elastica. In case you have some design skills, please contribute and let us know.</p>
-
-<h2>Everything else related to Elastica</h2>
-
-<p>There is something missing on the list but you would like to contribute it? Please do and let us know :&ndash;)</p>
 
   
-    <footer>
+
+
+<time datetime="2013-08-25T10:47:00+02:00" pubdate data-updated="true">Aug 25<span>th</span>, 2013</time>
       
-      
-        <div class="sharing">
+
+
+    </p>
+    
+      <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://Elastica.io//contribute/index.html" data-via="" data-counturl="http://Elastica.io//contribute/index.html" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://Elastica.io//2013/08/25/release-v0-dot-90-dot-2-0/" data-via="" data-counturl="http://Elastica.io//2013/08/25/release-v0-dot-90-dot-2-0/" >Tweet</a>
   
   
   
 </div>
 
+    
+    <p class="meta">
       
-    </footer>
-  
+        <a class="basic-alignment left" href="/2013/06/07/release-v0-dot-90-dot-1-0/" title="Previous Post: Release v0.90.1.0">&laquo; Release v0.90.1.0</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
